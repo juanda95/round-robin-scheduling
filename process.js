@@ -13,8 +13,9 @@ Process.prototype.execute = function (quantum) {
     throw new Error('Invalid argument: quantum must be positive and greater than 0');
   }
 
+  quantum = (quantum > this.remainingTime) ? this.remainingTime : quantum;
   this.remainingTime = this.remainingTime - quantum;
-  return this.remainingTime;
+  return quantum;
 };
 
 Process.prototype._createRandomName = () => {

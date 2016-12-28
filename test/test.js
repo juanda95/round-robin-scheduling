@@ -57,20 +57,30 @@ describe('Process', () => {
       expect(number).to.be.a('number');
     });
 
-    it('should subtract the quantum from the remaining time', () => {
+    it('should subtract the quantum if there\'s enough remaining time', () => {
       let quantum = 10;
-      let executionTime = 60;
-      let process = new Process('Test Process', executionTime);
+      let remainingTime = 10;
+      let process = new Process('Test Process', 60);
+      process.remainingTime = remainingTime;
       process.execute(quantum);
-      expect(process.remainingTime).to.be(executionTime - quantum);
+      expect(process.remainingTime).to.be(remainingTime - quantum);
     });
 
-    it('should return the remaining time', () => {
+    it('should return the executed time', () => {
       let quantum = 10;
-      let executionTime = 40;
-      let process = new Process('Test Process', executionTime);
+      let process = new Process('Test Process', 40);
+      let remainingTime = process.remainingTime;
       let result = process.execute(quantum);
-      expect(result).to.be(executionTime - quantum);
+      expect(result).to.be(quantum);
+    });
+
+    it('execution should not surpass remaining time', () => {
+      let quantum = 10;
+      let remainingTime = 5;
+      let process = new Process('Test Process', 50);
+      process.remainingTime = remainingTime;
+      let result = process.execute(quantum);
+      expect(result).to.be(remainingTime);
     });
   })
 
