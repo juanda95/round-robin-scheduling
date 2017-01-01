@@ -1,25 +1,26 @@
-let Process = require('./process');
+const Process = require('./process');
 
 function ProcessManager(process) {
-  if (!Array.isArray(process)) {
-    process = [];
+  let processList = [];
+  if (Array.isArray(process)) {
+    processList = process;
   }
-  this._processList = process;
+  this.processList = processList;
 }
 
-ProcessManager.prototype.addProcess = function (process) {
+ProcessManager.prototype.addProcess = function addProcess(process) {
   if (process instanceof Process) {
-    this._processList.push(process);
+    this.processList.push(process);
   }
-  return this._processList;
+  return this.processList;
 };
 
-ProcessManager.prototype.setQuantum = function (number) {
+ProcessManager.prototype.setQuantum = function setQuantum(number) {
   if (typeof number !== 'number') {
     throw new Error('Invalid argument: quantum should only be a number');
   }
 
-  this._quantum = number;
+  this.quantum = number;
   return this;
 };
 
