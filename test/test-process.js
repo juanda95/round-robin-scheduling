@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const Process = require('../process');
+const Process = require('../src/process');
 
 describe('Process', () => {
   describe('#Process()', () => {

@@ -1,6 +1,6 @@
 const expect = require('expect.js');
-const ProcessManager = require('../process-manager');
-const Process = require('../process');
+const ProcessManager = require('../src/process-manager');
+const Process = require('../src/process');
 
 function createProcessList(processes) {
   const processList = [];
