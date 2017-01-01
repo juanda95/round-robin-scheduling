@@ -6,6 +6,8 @@ function ProcessManager(process) {
     processList = process;
   }
   this.processList = processList;
+  this.queue = [];
+  this.quantum = 5;
 }
 
 ProcessManager.prototype.addProcess = function addProcess(process) {
@@ -22,6 +24,29 @@ ProcessManager.prototype.setQuantum = function setQuantum(number) {
 
   this.quantum = number;
   return this;
+};
+
+ProcessManager.prototype.execute = function execute() {
+  if (this.isFinished()) return this.elapsedTime;
+
+  this.elapsedTime = 0;
+  this.queue = this.processList;
+
+  while (!this.isFinished()) {
+    const actualProcess = this.queue.shift();
+    actualProcess.execute(this.quantum);
+
+    if (actualProcess.remainingTime > 0) {
+      this.queue.push(actualProcess);
+    }
+    this.elapsedTime += this.quantum;
+  }
+
+  return this.elapsedTime;
+};
+
+ProcessManager.prototype.isFinished = function isFinished() {
+  return this.processList.every(process => process.remainingTime === 0);
 };
 
 module.exports = ProcessManager;
