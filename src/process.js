@@ -19,6 +19,10 @@ Process.prototype.execute = function execute(quantum) {
   return userQuantum;
 };
 
+Process.prototype.isFinished = function isFinished() {
+  return this.remainingTime <= 0;
+};
+
 Process.prototype.createRandomName = () => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
   const letter = alphabet[Math.floor(Math.random() * alphabet.length)];

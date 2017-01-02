@@ -46,7 +46,7 @@ ProcessManager.prototype.execute = function execute() {
 };
 
 ProcessManager.prototype.isFinished = function isFinished() {
-  return this.processList.every(process => process.remainingTime === 0);
+  return this.processList.every(process => process.isFinished());
 };
 
 module.exports = ProcessManager;
