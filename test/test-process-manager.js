@@ -119,6 +119,35 @@ describe('ProcessManager', () => {
       const result = processManager.execute();
       expect(result).to.be(elapsedTime);
     });
+
+    it('should have a log of execution', () => {
+      // Generate 5 process of 100 execution time each
+      const generatedProcessList = createProcessList(5);
+      const processManager = new ProcessManager(generatedProcessList)
+        .setQuantum(50);
+      const logsQuantity = 10;
+
+      processManager.execute();
+
+      expect(processManager.logs).to.have.length(logsQuantity);
+    });
+
+    it('should have different times for each item in the log', () => {
+      // Generate 5 process of 100 execution time each
+      const generatedProcessList = createProcessList(5);
+      const processManager = new ProcessManager(generatedProcessList)
+        .setQuantum(50);
+      const times = [];
+      let logs = [];
+
+      processManager.execute();
+      logs = processManager.logs;
+
+      for (let i = 0; i < logs.length; i += 1) {
+        const actualTime = logs[i].actualTime;
+        expect(times).to.not.contain(actualTime);
+      }
+    });
   });
 
   describe('#isFinished()', () => {

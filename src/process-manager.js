@@ -1,4 +1,5 @@
 const Process = require('./process');
+const Log = require('./log');
 
 function ProcessManager(process) {
   let processList = [];
@@ -8,6 +9,7 @@ function ProcessManager(process) {
   this.processList = processList;
   this.queue = [];
   this.quantum = 5;
+  this.logs = [];
 }
 
 ProcessManager.prototype.addProcess = function addProcess(process) {
@@ -35,6 +37,7 @@ ProcessManager.prototype.execute = function execute() {
   while (!this.isFinished()) {
     const actualProcess = this.queue.shift();
     actualProcess.execute(this.quantum);
+    this.logs.push(new Log(actualProcess, this.elapsedTime));
 
     if (actualProcess.remainingTime > 0) {
       this.queue.push(actualProcess);
